@@ -20,6 +20,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+# tinymce settings
+TINYMCE_JS_ROOT = os.path.join(BASE_DIR, "static", 'js', 'tinymce', 'tinymce.min.js')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -31,6 +34,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'http://218509b4.ngrok.io']
 SITE_ID = 2
+DISQUS_WEBSITE_SHORTNAME = 'myBlog'
 
 # Application definition
 
@@ -50,11 +54,19 @@ INSTALLED_APPS = [
     'products',
     'paypal.standard.ipn',
     'magazines',
+    'reusable_blog',
+    'disqus',
+    'debug_toolbar',
+    'emoticons',
+    'tinymce',
+    'threads',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
                            'accounts.backends.EmailAuth',)
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,6 +79,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'we_are_social.urls'
