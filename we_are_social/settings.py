@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'emoticons',
     'tinymce',
     'threads',
+    'polls',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
