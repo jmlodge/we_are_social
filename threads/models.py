@@ -15,8 +15,8 @@ class Subject(models.Model):
 
 class Thread(models.Model):
     name = models.CharField(max_length=255)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='treads')
-    subject = models.ForeignKey(Subject, related_name='treads')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='threads')
+    subject = models.ForeignKey(Subject, related_name='threads')
     created_at = models.DateTimeField(default=timezone.now())
 
 

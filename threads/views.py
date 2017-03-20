@@ -8,6 +8,7 @@ from django.template.context_processors import csrf
 from django.forms import formset_factory
 from threads.forms import ThreadForm, PostForm
 from polls.forms import PollSubjectForm, PollForm
+from polls.models import PollSubject
 
 
 def forum(request):
@@ -139,6 +140,22 @@ def delete_post(request, post_id):
     post.delete()
 
     messages.success(request, "Your post was deleted!")
+
+    return redirect(reverse('thread', args={thread_id}))
+
+
+@login_required
+def thread_vote(request, thread_id, subject_id):
+    thread = Thread.objects.get(id=thread_id)
+    subject = thread.poll.votes.filter(user=request.user)
+
+    if subject:
+        messages.error(request, "You have already voted on this!...")
+        return redirect(reverse('thread', args={thread_id}))
+
+    subject = PollSubject.objects.get(id=subject_id)
+    subject.votes.create(poll=subject.poll, user=request.user)
+    messages.success(request, "Thank you, we have registered your vote!")
 
     return redirect(reverse('thread', args={thread_id}))
 
